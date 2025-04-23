@@ -1,0 +1,22 @@
+services:
+  mongo:
+    image: mongo:8.0.3-noble
+    restart: on-failure
+    ports:
+      - ${MONGO_PORT}:27017
+    networks:
+      - msg-cron-network
+    volumes:
+      - msg-cron-mongo-vol-db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+
+volumes:
+  msg-cron-mongo-vol-db:
+    driver: local
+
+networks:
+  msg-cron-network:
+    driver: bridge
